@@ -1,21 +1,41 @@
+import kotlin.math.abs
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun part1(firstCol: List<Long>, secondCol: List<Long>): Long {
+        val secondColSorted = secondCol.sorted()
+
+        return firstCol.sorted().mapIndexed { index, item ->
+            abs(item - secondColSorted[index])
+        }.sum()
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    fun part1Zip(firstCol: List<Long>, secondCol: List<Long>): Long {
+        return firstCol.sorted().zip(secondCol.sorted()).sumOf { abs(it.first - it.second)}
     }
 
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
+    fun part2(firstCol: List<Long>, secondCol: List<Long>): Long {
+        val counts = mutableMapOf<Long, Long>()
+        secondCol.forEach {
+            counts.merge(it, 1, Long::plus)
+        }
 
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+        return firstCol.sumOf { counts.getOrDefault(it, 0) * it }
+    }
 
-    // Read the input from the `src/Day01.txt` file.
+    fun part2Groupingby(firstCol: List<Long>, secondCol: List<Long>): Long {
+        val counts = secondCol.groupingBy { it }.eachCount()
+
+        return firstCol.sumOf { counts.getOrDefault(it, 0) * it }
+    }
+
     val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    val (first, second) = input.map {
+        Pair(it.substringBefore(' ').toLong(), it.substringAfterLast(' ').toLong())
+    }.unzip()
+
+    part1(first, second).println()
+    part1Zip(second, first).println()
+    part2(first, second).println()
+    part2Groupingby(first, second).println()
+
 }
