@@ -18,6 +18,11 @@ fun main() {
         return safeAsc || safeDec
     }
 
+    fun levelsTestZipWithNext(levels: List<Int>): Boolean {
+        val diffs = levels.zipWithNext { a, b -> a - b }
+        return diffs.all { it in 1..3 } || diffs.all { it in -3..-1}
+    }
+
     fun part1(input: List<List<Int>>): Int {
         var safeReports = 0
         input.forEach { levels ->
@@ -27,6 +32,10 @@ fun main() {
         }
 
         return safeReports
+    }
+
+    fun part1ZipWithNext(input: List<List<Int>>): Int {
+        return input.count { levelsTestZipWithNext(it) }
     }
 
     fun part2(input: List<List<Int>>): Int {
@@ -48,6 +57,16 @@ fun main() {
         return safeReports
     }
 
+    fun part2Indices(input: List<List<Int>>): Int {
+        val dampened = { levels: List<Int>, index: Int ->
+            levels.subList(0, index) + levels.subList(index + 1, levels.size)
+        }
+
+        return input.count { levels ->
+            levelsTestZipWithNext(levels) || levels.indices.any { levelsTestZipWithNext(dampened(levels, it)) }
+        }
+    }
+
 
 
 //    // Test if implementation meets criteria from the description, like:
@@ -65,9 +84,11 @@ fun main() {
 
     val input = readInput(filename)
     val reports = input.map {
-        it.split("""\s+""".toRegex()).map(String::toInt)
+        parseLineToListInt(it)
     }
 
     part1(reports).println()
+    part1ZipWithNext(reports).println()
     part2(reports).println()
+    part2Indices(reports).println()
 }

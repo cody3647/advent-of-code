@@ -1,3 +1,4 @@
+import java.math.BigDecimal
 import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
@@ -19,3 +20,11 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
  * The cleaner shorthand for printing output.
  */
 fun Any?.println() = println(this)
+
+val spacesRegex = """\s+""".toRegex()
+
+fun parseLineToList(line: String): List<String> = line.split(spacesRegex)
+fun parseLineToListLong(line: String): List<Long> = line.split(spacesRegex).mapNotNull(String::toLongOrNull)
+fun parseLineToListInt(line: String): List<Int> = line.split(spacesRegex).mapNotNull(String::toIntOrNull)
+fun parseLineToListDouble(line: String): List<Double> = line.split(spacesRegex).mapNotNull(String::toDoubleOrNull)
+fun parseLineToListBigDecimal(line: String): List<BigDecimal> = line.split(spacesRegex).mapNotNull(String::toBigDecimalOrNull)

@@ -29,8 +29,8 @@ fun main() {
     }
 
     val input = readInput("Day01")
-    val (first, second) = input.map {
-        Pair(it.substringBefore(' ').toLong(), it.substringAfterLast(' ').toLong())
+    val (first, second) = input.map(::parseLineToListLong).map {
+        Pair(it.first(), it.last())
     }.unzip()
 
     part1(first, second).println()
