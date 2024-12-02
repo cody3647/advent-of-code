@@ -22,7 +22,7 @@ fun main() {
         return firstCol.sumOf { counts.getOrDefault(it, 0) * it }
     }
 
-    fun part2Groupingby(firstCol: List<Long>, secondCol: List<Long>): Long {
+    fun part2GroupingBy(firstCol: List<Long>, secondCol: List<Long>): Long {
         val counts = secondCol.groupingBy { it }.eachCount()
 
         return firstCol.sumOf { counts.getOrDefault(it, 0) * it }
@@ -36,6 +36,6 @@ fun main() {
     part1(first, second).println()
     part1Zip(second, first).println()
     part2(first, second).println()
-    part2Groupingby(first, second).println()
+    part2GroupingBy(first, second).println()
 
 }
