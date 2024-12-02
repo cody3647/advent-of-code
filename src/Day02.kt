@@ -26,8 +26,6 @@ fun main() {
         input.forEach { levels ->
             if (levelsTest(levels)) {
                 safeReports++
-            } else {
-                levels.println()
             }
         }
 
@@ -40,18 +38,12 @@ fun main() {
             if (levelsTest(levels)) {
                 safeReports++
                 return@forEach
-            } else {
-                "START".println()
-                levels.println()
             }
             for (i in 0..<levels.size) {
                 val test = levels.subList(0, i) + levels.subList(i + 1, levels.size)
                 if (levelsTest(test)) {
                     safeReports++
-                    "plus 1".println()
                     return@forEach
-                } else {
-                    test.println()
                 }
             }
         }
