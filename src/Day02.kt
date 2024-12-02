@@ -15,10 +15,7 @@ fun main() {
             }
         }
 
-        if (safeAsc || safeDec) {
-            return true
-        }
-        return false
+        return safeAsc || safeDec
     }
 
     fun part1(input: List<List<Int>>): Int {
